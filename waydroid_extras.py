@@ -11,11 +11,13 @@ from tqdm import tqdm
 import requests
 import re
 
-download_loc = ""
-if os.environ.get("XDG_CACHE_HOME", None) is None:
-    download_loc = os.path.join('/', "home", os.environ.get("SUDO_USER", os.environ["USER"]), ".cache", "waydroid_script", "downloads")
-else:
-    os.path.join(os.environ["XDG_CACHE_HOME"], "waydroid_script", "downloads")
+download_loc = os.path.join(
+    os.environ.get("XDG_CACHE_HOME",
+                   os.path.join(os.environ.get('HOME'), ".cache")
+                  ),
+    "waydroid_script",
+    "downloads"
+)
 
 print(download_loc)
 
