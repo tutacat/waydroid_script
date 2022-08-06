@@ -12,10 +12,18 @@ import requests
 import re
 
 download_loc = ""
-if os.environ.get("XDG_CACHE_HOME", None) is None:
-    download_loc = os.path.join('/', "home", os.environ.get("SUDO_USER", os.environ["USER"]), ".cache", "waydroid_script", "downloads")
+if os.environ.get("XDG_CACHE_HOME", None) == None:
+    try:
+        from gi.repository import GLib
+        download_loc = os.path.join(GLib.get_user_cache_dir(), "waydroid_script", "downloads")
+    except:
+        try:
+            import glib
+            download_loc = os.path.join(glib.get_user_cache_dir(), "waydroid_script", "downloads")
+        except:
+            download_loc = os.path.join(os.environ.get('HOME',os.path.join('/', "home", os.environ.get("SUDO_USER", os.environ["USER"]))), ".cache", "waydroid_script", "downloads")
 else:
-    os.path.join(os.environ["XDG_CACHE_HOME"], "waydroid_script", "downloads")
+    download_loc = os.path.join(os.environ["XDG_CACHE_HOME"], "waydroid_script", "downloads")
 
 print(download_loc)
 
